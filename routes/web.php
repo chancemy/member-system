@@ -18,10 +18,14 @@ Route::get('/', function () {
 });
 
 // Auth::routes();
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-    Route::get('news', 'newsController@index');
-    Route::get('products', 'ProductsController@index');
+Route::middleware(['can:admin'])->prefix('admin')->group(function () {
+    Route::get('/news', 'newsController@index');
+    Route::get('/products', 'ProductsController@index');
+    Route::get('/purview', 'PurveiwController@index');
+    Route::get('/purview/update/{role}/{id}','PurveiwController@purviewUpdate');
 });
+
+Route::get('/account','AccountController@index' );
 
 // Authentication Routes...
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

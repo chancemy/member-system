@@ -32,16 +32,24 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    {{-- @can('admin') --}}
+
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item">
-                                <a href="/admin/news" class="nav-link">最新消息</a>
+                                <a href="{{ asset('/account') }}" class="nav-link">帳戶管理</a>
+                            </li>
+                            @can('admin')
+                            <li class="nav-item">
+                                <a href="{{ asset('/admin/news') }}" class="nav-link">最新消息</a>
                             </li>
                             <li>
-                                <a href="/admin/products" class="nav-link">產品</a>
+                                <a href="{{ asset('/admin/products') }}" class="nav-link">產品</a>
                             </li>
+                            <li>
+                                <a href="{{ asset('/admin/purview') }}" class="nav-link">權限管理</a>
+                            </li>
+                            @endcan
                         </ul>
-                    {{-- @endcan --}}
+
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
@@ -84,7 +92,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}" ></script>
     @yield('js')
 </body>
 </html>
