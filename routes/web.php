@@ -20,6 +20,13 @@ Route::get('/', function () {
 // Auth::routes();
 Route::middleware(['can:admin'])->prefix('admin')->group(function () {
     Route::get('/news', 'newsController@index');
+    Route::delete('/news/delete/{id}','NewsController@newsDelete');
+    Route::get('/news/createView', 'NewsController@newsCreateView');
+    Route::post('/news/create','NewsController@newsCreate');
+    Route::get('/news/editView/{id}','NewsController@newsEditView');
+    Route::post('/news/edit', 'ProductsController@itemEdit');
+
+    ///
     Route::get('/purview', 'PurveiwController@index');
     Route::get('/purview/update/{role}/{id}','PurveiwController@purviewUpdate');
     Route::get('/account','AccountController@index' );

@@ -35,6 +35,8 @@
                                     <th>姓名</th>
                                     <th>E-mail</th>
                                     <th>目前權限</th>
+                                    <th>電話</th>
+                                    <th>地址</th>
                                     <th>編輯帳戶</th>
                                 </tr>
                             </thead>
@@ -44,9 +46,12 @@
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->email }}</td>
                                         <td>{{ $item->role }}</td>
+                                        <td>{{ $item->client->phone??'' }}</td>
+                                        <td>{{ $item->client->address??'' }}</td>
+
                                         <td>
                                             <a href="{{ asset('/admin/account/editView') }}/{{ $item->id }}"  type="button" class="btn btn-outline-success user-confirm" >編輯</a>
-                                            <form  style="display: inline-block"  class="from-delete" action="{{ asset('/account/delete') }}/{{ $item->id }}" method="POST">
+                                            <form  style="display: inline-block"  class="from-delete" action="{{ asset('/admin/account/delete') }}/{{ $item->id }}" method="POST">
                                                 @csrf
                                                 @method('delete')
                                                 <button  type="submit" class="btn btn-outline-danger admin-confirm " >刪除</button>

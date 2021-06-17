@@ -7,7 +7,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="{{ asset('/home') }}">Home</a></li>
-              <li class="breadcrumb-item"><a href="{{ asset('/home') }}">帳戶管理</a></li>
+              <li class="breadcrumb-item"><a href="{{ asset('admin/account') }}">帳戶管理</a></li>
               <li class="breadcrumb-item active" aria-current="page">新增會員</li>
             </ol>
         </nav>
@@ -53,7 +53,20 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label for="phone" class="col-md-4 col-form-label text-md-right">phone</label>
 
+                        <div class="col-md-6">
+                            <input id="phone" type="text" class="form-control" name="phone"  required autocomplete="phone" autofocus>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="address" class="col-md-4 col-form-label text-md-right">address</label>
+
+                        <div class="col-md-6">
+                            <input id="address" type="text" class="form-control" name="address"  required autocomplete="address" autofocus>
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 

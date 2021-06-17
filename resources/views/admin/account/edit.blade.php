@@ -7,7 +7,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="{{ asset('/home') }}">Home</a></li>
-              <li class="breadcrumb-item"><a href="{{ asset('/home') }}">帳戶管理</a></li>
+              <li class="breadcrumb-item"><a href="{{ asset('admin/account') }}">帳戶管理</a></li>
               <li class="breadcrumb-item active" aria-current="page">編輯會員</li>
             </ol>
         </nav>
@@ -16,16 +16,18 @@
             <div class="card-body">
                 <form method="POST" action="{{ asset('/admin/account/create') }}">
                     @csrf
-                    <div class="form-group row">
-                        <label for="role" class="col-md-4 col-form-label text-md-right">權限</label>
+                    @if ($userID->role == "admin")
+                        <div class="form-group row">
+                            <label for="role" class="col-md-4 col-form-label text-md-right">權限</label>
 
-                        <div class="col-md-6">
-                            <select class="form-control" id="role" name="role">
-                                    <option @if ($userID->role == 'user') selected @endif>user</option>
-                                    <option @if ($userID->role == 'admin') selected @endif>admin</option>
-                            </select>
+                            <div class="col-md-6">
+                                <select class="form-control" id="role" name="role">
+                                        <option @if ($userID->role == 'user') selected @endif>user</option>
+                                        <option @if ($userID->role == 'admin') selected @endif>admin</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
+                    @endif
                     <div class="form-group row">
                         <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
@@ -44,8 +46,7 @@
                         <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                         <div class="col-md-6">
-                            <input readonly id="email" type="email" class="form-control @error('email') is-invalid @enderror" value="{{ $userID->email }}" required autocomplete="email">
-
+                            <input readonly id="email" type="email" class="form-control @error('email') is-invalid @enderror" value="{{ $userID->email }}"  >
                             @error('email')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -53,6 +54,23 @@
                             @enderror
                         </div>
                     </div>
+
+                    @if ($userID->role == 'user')
+                        <div class="form-group row">
+                            <label for="phone" class="col-md-4 col-form-label text-md-right">phone</label>
+
+                            <div class="col-md-6">
+                                <input id="phone" type="text" class="form-control" name="phone"  required autocomplete="phone" autofocus>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="address" class="col-md-4 col-form-label text-md-right">address</label>
+
+                            <div class="col-md-6">
+                                <input id="address" type="text" class="form-control" name="address"  required autocomplete="address" autofocus>
+                            </div>
+                        </div>
+                    @endif
 
                     <div class="form-group row">
                         <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
