@@ -7,10 +7,15 @@ use Illuminate\Http\Request;
 
 class PurveiwController extends Controller
 {
+    function __construct()
+    {
+        $this->index = 'admin.purview.index' ;
+        $this->purview = '/admin/purview/';
+    }
     public function index(){
         $memberData = User::get();
         // dd($memberData);
-        return view('admin.purview.index',compact('memberData'));
+        return view($this->index,compact('memberData'));
     }
     public function purviewUpdate($role,$id){
         // dd($id);
@@ -25,6 +30,6 @@ class PurveiwController extends Controller
         }
         $oldRole->save();
         // dd( $oldRole->name);
-        return redirect('/admin/purview/')->with('message','權限修改成功');
+        return redirect($this->purview)->with('message','權限修改成功');
     }
 }

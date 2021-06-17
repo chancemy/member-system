@@ -32,23 +32,29 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-
+                    @can('admin')
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item">
-                                <a href="{{ asset('/account') }}" class="nav-link">帳戶管理</a>
+                                <a href="{{ asset('/admin/account') }}" class="nav-link">帳戶管理</a>
                             </li>
-                            @can('admin')
                             <li class="nav-item">
                                 <a href="{{ asset('/admin/news') }}" class="nav-link">最新消息</a>
                             </li>
-                            <li>
-                                <a href="{{ asset('/admin/products') }}" class="nav-link">產品</a>
-                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  產品管理
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                  <a class="dropdown-item" href="{{ asset('/admin/products/type') }}">產品種類</a>
+                                  <a class="dropdown-item" href="{{ asset('/admin/products/item') }}">產品品項</a>
+
+                                </div>
+                              </li>
                             <li>
                                 <a href="{{ asset('/admin/purview') }}" class="nav-link">權限管理</a>
                             </li>
-                            @endcan
                         </ul>
+                    @endcan
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">

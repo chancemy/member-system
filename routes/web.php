@@ -20,12 +20,35 @@ Route::get('/', function () {
 // Auth::routes();
 Route::middleware(['can:admin'])->prefix('admin')->group(function () {
     Route::get('/news', 'newsController@index');
-    Route::get('/products', 'ProductsController@index');
     Route::get('/purview', 'PurveiwController@index');
     Route::get('/purview/update/{role}/{id}','PurveiwController@purviewUpdate');
+    Route::get('/account','AccountController@index' );
+    Route::delete('/account/delete/{id}', 'AccountController@delete');
+    Route::get('/account/createView', 'AccountController@createView');
+    Route::post('/account/create', 'AccountController@create');
+    Route::get('/account/editView/{id}','AccountController@editView' );
+    Route::post('/account/edit','AccountController@edit' );
+
+
+    ///
+    Route::get('/products/type','ProductsController@typeIndex' );
+    Route::get('/products/item','ProductsController@productsIndex' );
+    ///
+    Route::get('/products/type/create','ProductsController@typeCreate' );
+    Route::post('/products/type/update','ProductsController@typeUpdate' );
+    Route::get('/products/type/editView/{id}', 'ProductsController@typeEditView');
+    Route::post('/products/type/edit/{id}', 'ProductsController@typeEdit');
+    Route::delete('/products/type/delete/{id}', 'ProductsController@typeDelete');
+    ///
+    Route::get('/products/item/create', 'ProductsController@itemCreate');
+    Route::post('/products/item/update', 'ProductsController@itemUpdate');
+    Route::get('/products/item/editView/{id}', 'ProductsController@itemEditView');
+    Route::post('/products/item/edit/{id}','ProductsController@itemEdit' );
+    Route::delete('/products/item/delete/{id}', 'ProductsController@itemDelete');
+
 });
 
-Route::get('/account','AccountController@index' );
+
 
 // Authentication Routes...
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
