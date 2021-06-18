@@ -19,12 +19,13 @@ Route::get('/', function () {
 
 // Auth::routes();
 Route::middleware(['can:admin'])->prefix('admin')->group(function () {
+    Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/news', 'newsController@index');
     Route::delete('/news/delete/{id}','NewsController@newsDelete');
     Route::get('/news/createView', 'NewsController@newsCreateView');
     Route::post('/news/create','NewsController@newsCreate');
     Route::get('/news/editView/{id}','NewsController@newsEditView');
-    Route::post('/news/edit', 'ProductsController@itemEdit');
+    Route::post('/news/edit/{id}', 'NewsController@newsEdit');
 
     ///
     Route::get('/purview', 'PurveiwController@index');
@@ -34,7 +35,7 @@ Route::middleware(['can:admin'])->prefix('admin')->group(function () {
     Route::get('/account/createView', 'AccountController@createView');
     Route::post('/account/create', 'AccountController@create');
     Route::get('/account/editView/{id}','AccountController@editView' );
-    Route::post('/account/edit','AccountController@edit' );
+    Route::post('/account/edit/{id}','AccountController@edit' );
 
 
     ///
@@ -72,4 +73,4 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 //
-Route::get('/home', 'HomeController@index')->name('home');
+

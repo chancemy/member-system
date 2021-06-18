@@ -30,6 +30,7 @@
                                         <th>品名</th>
                                         <th>價格</th>
                                         <th>內容</th>
+                                        <th>圖片</th>
                                         <th>種類</th>
                                         <th>操作</th>
                                     </tr>
@@ -40,6 +41,11 @@
                                             <td>{{ $item->product_name }}</td>
                                             <td>{{ $item->product_price }}</td>
                                             <td>{{ $item->descript }}</td>
+                                            <td>
+                                            @foreach ($item->img as $productImg)
+                                                <img width="200px" src="{{ $productImg->photo }}" alt="">
+                                            @endforeach
+                                            </td>
                                             <td>{{ $item->type->type_name }}</td>
                                             <td>
                                                 <a href="{{ asset('/admin/products/item/editView') }}/{{ $item->id }}"  type="botton" class="btn btn-outline-success user-confirm" >編輯</a>

@@ -14,7 +14,7 @@
         <div class="card">
             <div class="card-header"><h2>編輯消息</h2></div>
             <div class="card-body">
-                <form method="POST" action="{{ asset('/admin/news/edit') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ asset('/admin/news/edit') }}/{{ $oldNewsData->id }}" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group row">
                         <label for="type" class="col-md-4 col-form-label text-md-right">分類</label>
@@ -40,7 +40,7 @@
 
                         <div class="col-md-6">
                             <img width="200px" src="{{ $oldNewsData->img }}" alt="">
-                            <input type="file" name="img" required>
+                            <input type="file" name="img" >
                         </div>
                     </div>
                     <div class="form-group row">

@@ -26,16 +26,7 @@ class NewsController extends Controller
     }
     public function newsCreate(Request $request){
         $file = $request->file('img');
-        if($request->img){
-            if(!is_dir('upload/')){
-                mkdir('upload/');
-            }
-            $extenstion = $request->img->getclientoriginalextension();
-            $filename = md5(uniqid(rand())) . '.' . $extenstion;
-            $path = '/upload/'.$filename;
-            move_uploaded_file($file,public_path().$path);
-        }
-
+        $path = FileController::imgUpload($file );
         News::create([
             'type' => $request->type,
             'publish_date' => date('Y/m/d'),
@@ -46,9 +37,10 @@ class NewsController extends Controller
         return redirect('/admin/news/')->with('message','新增成功');
     }
     public function newsDelete($id){
-        $newsData = News::find($id);
-        $newsData->delete();
-        return redirect('/admin/news/create')->with('message','刪除成功');
+        $oldNewsData = News::find($id);
+        File::delete(public_path().$oldNewsData->img);
+        $oldNewsData->delete();
+        return redirect('/admin/news/')->with('message','刪除成功');
     }
     public function newsEditView(Request $request,$id){
 
@@ -59,8 +51,9 @@ class NewsController extends Controller
     }
     public function newsEdit(Request $request,$id){
         $oldNewsData = News::find($id);
-        $file = $request->file('img');
-        if($request->img){
+
+        if($request->hasfile('img')){
+            $file = $request->file('img'); //嚴謹的寫法與 $request->img 一樣
             File::delete(public_path().$oldNewsData->img);
             if(!is_dir('upload/')){
                 mkdir('upload/');
@@ -69,14 +62,15 @@ class NewsController extends Controller
             $filename = md5(uniqid(rand())) . '.' . $extenstion;
             $path = '/upload/'.$filename;
             move_uploaded_file($file,public_path().$path);
+            $oldNewsData->img = $path;
         }
 
             $oldNewsData->type = $request->type ;
             $oldNewsData->publish_date = date('Y/m/d');
             $oldNewsData->title = $request->title;
             $oldNewsData->content = $request->content;
-            $oldNewsData->img = $path;
 
+            $oldNewsData->save();
         return redirect('/admin/news/')->with('message','修改成功');
     }
 }

@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\ProductImg;
 use App\ProductsType;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
     public function typeIndex(){
-        $typeData = ProductsType::get();
+        $typeData = ProductsType::find(8);
+        dd($typeData->product);
+        $test = Product::find(11);
+        dd($test->type);
         return view('admin.produucts.type.index',compact('typeData'));
     }
 
@@ -42,6 +46,7 @@ class ProductsController extends Controller
 
     public function productsIndex(){
         $productsData = Product::get();
+        // dd($productsData->img);
         return view('admin.produucts.item.index',compact('productsData'));
     }
 
@@ -50,7 +55,17 @@ class ProductsController extends Controller
         return view('admin.produucts.item.create',compact('productsData'));
     }
     public function itemUpdate(Request $request){
-        Product::create($request->all());
+        $newRecord  = Product::create($request->all());
+        if($request->hasFile('photos')){
+
+            foreach ($request->photos as $key => $value) {
+                $path = FileController::photosUpload($value);
+                ProductImg::create([
+                    'photo' => $path,
+                    'product_id' => $newRecord->id
+                ]);
+            }
+        }
         return redirect('/admin/products/item')->with('message','新增產品成功');
     }
     public function itemDelete($id){

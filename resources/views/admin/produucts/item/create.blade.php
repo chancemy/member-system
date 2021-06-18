@@ -14,7 +14,7 @@
         <div class="card">
             <div class="card-header"><h2>新增產品</h2></div>
             <div class="card-body">
-                <form action="{{ asset('/admin/products/item/update') }}" method="POST">
+                <form action="{{ asset('/admin/products/item/update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                       <label for="product_name">品名</label>
@@ -23,19 +23,23 @@
                     <div class="form-group">
                         <label for="product_price">價格</label>
                         <input type="text" class="form-control" id="product_price" aria-describedby="emailHelp" placeholder="輸入產品種類" required name="product_price">
-                      </div>
-                      <div class="form-group">
+                    </div>
+                    <div class="form-group">
                         <label for="descript">內容</label>
                         <textarea class="form-control" id="descript" name="descript" rows="3" required></textarea>
-                      </div>
-                      <div class="form-group">
+                    </div>
+                    <div class="form-group">
+                        <label for="photos">產品圖片</label>
+                        <input multiple type="file" class="form-control" id="photos"  name="photos[]">
+                    </div>
+                    <div class="form-group">
                         <label for="product_type">種類</label>
                         <select class="form-control" id="product_type" name="product_type_id">
                             @foreach ($productsData as $item)
                                 <option value="{{ $item->id }}">{{ $item->type_name }}</option>
                             @endforeach
-                          </select>
-                      </div>
+                        </select>
+                    </div>
                     <button type="submit" class="btn btn-primary">新增</button>
                 </form>
             </div>

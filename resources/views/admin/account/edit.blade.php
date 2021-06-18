@@ -14,7 +14,7 @@
         <div class="card">
             <div class="card-header"><h2>編輯會員</h2></div>
             <div class="card-body">
-                <form method="POST" action="{{ asset('/admin/account/create') }}">
+                <form method="POST" action="{{ asset('/admin/account/edit') }}/{{ $userID->id }}">
                     @csrf
                     @if ($userID->role == "admin")
                         <div class="form-group row">
@@ -60,14 +60,14 @@
                             <label for="phone" class="col-md-4 col-form-label text-md-right">phone</label>
 
                             <div class="col-md-6">
-                                <input id="phone" type="text" class="form-control" name="phone"  required autocomplete="phone" autofocus>
+                                <input id="phone" type="text" class="form-control" name="phone"  required autocomplete="phone" autofocus value="{{ $userID->client->phone??''}}">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="address" class="col-md-4 col-form-label text-md-right">address</label>
 
                             <div class="col-md-6">
-                                <input id="address" type="text" class="form-control" name="address"  required autocomplete="address" autofocus>
+                                <input id="address" type="text" class="form-control" name="address"  required autocomplete="address" autofocus value="{{ $userID->client->address??''}}">
                             </div>
                         </div>
                     @endif

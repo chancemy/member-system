@@ -25,8 +25,9 @@ class AccountController extends Controller
 
     public function delete($id){
         $memberData = User::find($id);
-        // dd($memberData);
-
+        if($memberData->client){
+            $memberData->client->delete();
+        }
         $memberData->delete();
         return redirect($this->delete)->with('message','刪除帳號成功');
     }
@@ -37,7 +38,7 @@ class AccountController extends Controller
         return view('admin.account.create',compact('userData'));
     }
     public function create(Request $request){
-        dd("我有更新");
+
         $boolean = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -79,11 +80,15 @@ class AccountController extends Controller
         }
         $old_user = User::find($id);
         $old_user->name = $request->name;
-        User::create([
-            'name' => $request->name,
-            'password' => Hash::make($request->password),
-            'role' => $request->role
-        ]);
+        $old_user->password = Hash::make($request->password);
+        $old_user->role = $request->role ;
+        $old_user->save();
+        if($old_user->role == 'user'){
+            $old_client = UserClient::where('user_id',$old_user->id)->first();
+            $old_client->phone = $request->phone ;
+            $old_client->address = $request->address;
+            $old_client->save();
+        }
         return redirect('/admin/account')->with("message",'新增帳號成功');
     }
 }
