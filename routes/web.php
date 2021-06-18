@@ -54,6 +54,8 @@ Route::middleware(['can:admin'])->prefix('admin')->group(function () {
     Route::post('/products/item/edit/{id}','ProductsController@itemEdit' );
     Route::delete('/products/item/delete/{id}', 'ProductsController@itemDelete');
 
+
+    Route::post('/deleteImage','ProductsController@deleteImg');
 });
 
 

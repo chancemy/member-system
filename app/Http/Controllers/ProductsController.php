@@ -6,14 +6,14 @@ use App\Product;
 use App\ProductImg;
 use App\ProductsType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class ProductsController extends Controller
 {
     public function typeIndex(){
-        $typeData = ProductsType::find(8);
-        dd($typeData->product);
-        $test = Product::find(11);
-        dd($test->type);
+        $typeData = ProductsType::get();
+
+
         return view('admin.produucts.type.index',compact('typeData'));
     }
 
@@ -77,11 +77,26 @@ class ProductsController extends Controller
 
         $oldItemData = Product::find($id);
         $productsData = ProductsType::get();
-        return view('admin.produucts.item.edit',compact('oldItemData','productsData'));
+        $oldPhotos =  $oldItemData->img ;
+        // dd($oldPhotos);
+        return view('admin.produucts.item.edit',compact('oldItemData','productsData','oldPhotos'));
     }
     public function itemEdit(Request $request,$id){
-        $oldItemData = Product::find($id);
 
+        if($request->hasFile('photos')){
+            foreach ($request->photos as $key => $value) {
+
+
+                $path = FileController::photosUpload($value);
+                ProductImg::create([
+                    'photo' => $path,
+                    'product_id' => $id
+                ]);
+            }
+        }
+
+
+        $oldItemData = Product::find($id);
         $oldItemData->product_name = $request->product_name ;
         $oldItemData->product_price = $request->product_price ;
         $oldItemData->descript = $request->descript ;
@@ -90,4 +105,12 @@ class ProductsController extends Controller
         return redirect('/admin/products/item')->with('message','修改產品成功');
     }
 
+
+    public function deleteImg(Request $request){
+        $oldPhotos = ProductImg::find($request->id);
+        if(file_exists(public_path().$request->photo)){
+            File::delete(public_path().$request->photo);
+        }
+        $oldPhotos->delete();
+    }
 }

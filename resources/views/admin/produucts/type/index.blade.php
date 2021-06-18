@@ -37,6 +37,7 @@
                                         <tr>
                                             <td>{{ $item->type_name }}</td>
                                             <td>{{ $item->product->count() }}</td>
+                                            
                                             <td>
                                                 <a href="{{ asset('/admin/products/type/editView') }}/{{ $item->id }}"  type="botton" class="btn btn-outline-success user-confirm" >編輯</a>
                                                 <form  action="{{ asset('/admin/products/type/delete') }}/{{ $item->id }}" method="POST" style="display: inline-block"  class="from-delete" >

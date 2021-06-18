@@ -32,4 +32,6 @@ class FileController extends Controller
         move_uploaded_file($file,public_path().$path);
         return $path ;
     }
+
+    
 }
