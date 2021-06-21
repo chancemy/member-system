@@ -16,46 +16,57 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/index', function () {
+    return view('front.contact_us.index');
+});
 
 // Auth::routes();
-Route::middleware(['can:admin'])->prefix('admin')->group(function () {
-    Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('/news', 'newsController@index');
-    Route::delete('/news/delete/{id}','NewsController@newsDelete');
-    Route::get('/news/createView', 'NewsController@newsCreateView');
-    Route::post('/news/create','NewsController@newsCreate');
-    Route::get('/news/editView/{id}','NewsController@newsEditView');
-    Route::post('/news/edit/{id}', 'NewsController@newsEdit');
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/', 'HomeController@index')->name('home');
+    Route::prefix('/news')->group(function () {
+        Route::get('/', 'newsController@index');
+        Route::delete('/delete/{id}', 'NewsController@newsDelete');
+        Route::get('/createView', 'NewsController@newsCreateView');
+        Route::post('/create', 'NewsController@newsCreate');
+        Route::get('/editView/{id}', 'NewsController@newsEditView');
+        Route::post('/edit/{id}', 'NewsController@newsEdit');
+    });
 
+    Route::prefix('/account')->group(function () {
+        Route::get('/', 'AccountController@index');
+        Route::delete('/delete/{id}', 'AccountController@delete');
+        Route::get('/createView', 'AccountController@createView');
+        Route::post('/create', 'AccountController@create');
+        Route::get('/editView/{id}', 'AccountController@editView');
+        Route::post('/edit/{id}', 'AccountController@edit');
+    });
     ///
     Route::get('/purview', 'PurveiwController@index');
-    Route::get('/purview/update/{role}/{id}','PurveiwController@purviewUpdate');
-    Route::get('/account','AccountController@index' );
-    Route::delete('/account/delete/{id}', 'AccountController@delete');
-    Route::get('/account/createView', 'AccountController@createView');
-    Route::post('/account/create', 'AccountController@create');
-    Route::get('/account/editView/{id}','AccountController@editView' );
-    Route::post('/account/edit/{id}','AccountController@edit' );
+    Route::get('/purview/update/{role}/{id}', 'PurveiwController@purviewUpdate');
 
+    Route::prefix('/products')->group(function () {
+        Route::prefix('/type')->group(function () {
+            Route::get('/', 'ProductsController@typeIndex');
+            ///
+            Route::get('/create', 'ProductsController@typeCreate');
+            Route::post('/update', 'ProductsController@typeUpdate');
+            Route::get('/editView/{id}', 'ProductsController@typeEditView');
+            Route::post('/edit/{id}', 'ProductsController@typeEdit');
+            Route::delete('/delete/{id}', 'ProductsController@typeDelete');
+        });
+        Route::prefix('/item')->group(function () {
+            Route::get('/', 'ProductsController@productsIndex');
+            ///
+            Route::get('/create', 'ProductsController@itemCreate');
+            Route::post('/update', 'ProductsController@itemUpdate');
+            Route::get('/editView/{id}', 'ProductsController@itemEditView');
+            Route::post('/edit/{id}', 'ProductsController@itemEdit');
+            Route::delete('/delete/{id}', 'ProductsController@itemDelete');
+        });
+    });
 
     ///
-    Route::get('/products/type','ProductsController@typeIndex' );
-    Route::get('/products/item','ProductsController@productsIndex' );
-    ///
-    Route::get('/products/type/create','ProductsController@typeCreate' );
-    Route::post('/products/type/update','ProductsController@typeUpdate' );
-    Route::get('/products/type/editView/{id}', 'ProductsController@typeEditView');
-    Route::post('/products/type/edit/{id}', 'ProductsController@typeEdit');
-    Route::delete('/products/type/delete/{id}', 'ProductsController@typeDelete');
-    ///
-    Route::get('/products/item/create', 'ProductsController@itemCreate');
-    Route::post('/products/item/update', 'ProductsController@itemUpdate');
-    Route::get('/products/item/editView/{id}', 'ProductsController@itemEditView');
-    Route::post('/products/item/edit/{id}','ProductsController@itemEdit' );
-    Route::delete('/products/item/delete/{id}', 'ProductsController@itemDelete');
-
-
-    Route::post('/deleteImage','ProductsController@deleteImg');
+    Route::post('/deleteImage', 'ProductsController@deleteImg');
 });
 
 
@@ -75,4 +86,3 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 //
-
