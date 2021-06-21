@@ -14,15 +14,26 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/index', function () {
-    return view('front.contact_us.index');
+    return view('front/index');
 });
 
+Route::prefix('index')->group(function(){
+    Route::prefix('/contact_us')->group(function(){
+        Route::get('/create','ContactUsController@create' );
+        Route::post('/store', 'ContactUsController@store');
+    });
+});
 // Auth::routes();
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
+
+    Route::prefix('/contact_us')->group(function(){
+        Route::get('/', 'ContactUsController@adminIndex' );
+        Route::get('/read/{id}','ContactUsController@read' );
+        Route::delete('/delete/{id}', 'ContactUsController@delete' );
+
+    });
+
     Route::prefix('/news')->group(function () {
         Route::get('/', 'newsController@index');
         Route::delete('/delete/{id}', 'NewsController@newsDelete');

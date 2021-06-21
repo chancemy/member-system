@@ -40,6 +40,9 @@
                             <li class="nav-item">
                                 <a href="{{ asset('/admin/news') }}" class="nav-link">最新消息</a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ asset('/admin/contact_us') }}" class="nav-link">聯絡我們</a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                   產品管理
