@@ -17,10 +17,10 @@ Route::get('/', function () {
     return view('front/index');
 });
 
-Route::prefix('index')->group(function(){
+Route::prefix('user')->group(function(){
     Route::prefix('/contact_us')->group(function(){
-        Route::get('/create','ContactUsController@create' );
-        Route::post('/store', 'ContactUsController@store');
+        Route::get('/create','FrontController@contactUsView' );
+        Route::post('/store', 'FrontController@store');
     });
 });
 // Auth::routes();
