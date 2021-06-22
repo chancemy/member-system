@@ -44,8 +44,12 @@
                     </div>
                     <div class="form-group">
                         <div class="row">
+                            <div class="form-group">
+                                <label for="photo">產品主要圖片</label>
+                                <input type="file" class="form-control" id="photo"  name="photo">
+                            </div>
                             <div class="col-12" >
-                                <label for="descript">產品圖片</label>
+                                <label for="descript">產品主要圖片</label>
                             </div>
                             @foreach ($oldPhotos as $productImg)
                                 <div  class="col-4" style="position: relative">
@@ -53,10 +57,19 @@
                                     <img  src="{{ $productImg->photo }}" alt="">
                                 </div>
                             @endforeach
-                        </div>
-                        <div class="form-group">
-                            <label for="photos">產品圖片</label>
-                            <input multiple type="file" class="form-control" id="photos"  name="photos[]">
+                            <div class="form-group">
+                                <label for="photos">產品其他圖片</label>
+                                <input multiple type="file" class="form-control" id="photos"  name="photos[]">
+                            </div>
+                            <div class="col-12" >
+                                <label for="descript">產品其他圖片</label>
+                            </div>
+                            @foreach ($oldPhotos as $productImg)
+                                <div  class="col-4" style="position: relative">
+                                    <div data-id="{{ $productImg->id }}" class="del-img-btn d-flex justify-content-center align items-center">X</div>
+                                    <img  src="{{ $productImg->photo }}" alt="">
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                     <div class="form-group">

@@ -11,9 +11,7 @@ use Illuminate\Support\Facades\File;
 class ProductsController extends Controller
 {
     public function typeIndex(){
-        $typeData = ProductsType::get();
-
-
+        $typeData = ProductsType::with('product')->get();
         return view('admin.produucts.type.index',compact('typeData'));
     }
 
@@ -26,6 +24,9 @@ class ProductsController extends Controller
     }
     public function typeDelete($id){
         $typeData = ProductsType::find($id);
+        if($typeData->product->count() != 0){
+            return redirect('/admin/products/type')->with('message','此種類尚有產品無法直接刪除種類');
+        }
         $typeData->delete();
         return redirect('/admin/products/type')->with('message','刪除種類成功');
     }
@@ -45,7 +46,7 @@ class ProductsController extends Controller
     ///
 
     public function productsIndex(){
-        $productsData = Product::get();
+        $productsData = Product::with('type')->get();
         // dd($productsData->img);
         return view('admin.produucts.item.index',compact('productsData'));
     }
@@ -56,6 +57,17 @@ class ProductsController extends Controller
     }
     public function itemUpdate(Request $request){
         $newRecord  = Product::create($request->all());
+        $mainPhoto = $request->all();
+        if($request->has('main_photo')){
+            $mainPhoto['main_photo'] = FileController::photosUpload($request->photo);
+            // dd( $mainPhoto['photo']);
+            Product::create([
+                'product_name'=>$mainPhoto->name,
+                'product_price' => $mainPhoto->price,
+                'descript' => $mainPhoto->content,
+                'main_photo' =>$mainPhoto['main_photo'],
+            ]);
+        };
         if($request->hasFile('photos')){
 
             foreach ($request->photos as $key => $value) {

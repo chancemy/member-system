@@ -29,7 +29,11 @@
                         <textarea class="form-control" id="descript" name="descript" rows="3" required></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="photos">產品圖片</label>
+                        <label for="main_photo">產品主要圖片</label>
+                        <input type="file" class="form-control" id="main_photo"  name="main_photo">
+                    </div>
+                    <div class="form-group">
+                        <label for="photos">產品其他圖片</label>
                         <input multiple type="file" class="form-control" id="photos"  name="photos[]">
                     </div>
                     <div class="form-group">
