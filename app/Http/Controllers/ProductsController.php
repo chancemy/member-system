@@ -8,6 +8,7 @@ use App\ProductsType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
+
 class ProductsController extends Controller
 {
     public function typeIndex(){
@@ -56,20 +57,14 @@ class ProductsController extends Controller
         return view('admin.produucts.item.create',compact('productsData'));
     }
     public function itemUpdate(Request $request){
-        $newRecord  = Product::create($request->all());
-        $mainPhoto = $request->all();
-        if($request->has('main_photo')){
-            $mainPhoto['main_photo'] = FileController::photosUpload($request->photo);
-            // dd( $mainPhoto['photo']);
-            Product::create([
-                'product_name'=>$mainPhoto->name,
-                'product_price' => $mainPhoto->price,
-                'descript' => $mainPhoto->content,
-                'main_photo' =>$mainPhoto['main_photo'],
-            ]);
+        $requestData = $request->all();
+        if($request->hasFile('main_photo')){
+            $requestData['main_photo'] = FileController::photosUpload($request->main_photo);
         };
-        if($request->hasFile('photos')){
+        $newRecord = Product::create($requestData);
 
+
+        if($request->hasFile('photos')){
             foreach ($request->photos as $key => $value) {
                 $path = FileController::photosUpload($value);
                 ProductImg::create([
@@ -81,24 +76,38 @@ class ProductsController extends Controller
         return redirect('/admin/products/item')->with('message','新增產品成功');
     }
     public function itemDelete($id){
-        $itemData = Product::find($id);
+        $itemData = Product::with('img')->find($id);
+
         $itemData->delete();
+        dd($itemData->main_photo);
+
+        $itemData->img->delete();
+        if(file_exists(public_path().$itemData->main_photo)){
+            File::delete(public_path().$itemData->mian_photo);
+        }
+        if(file_exists(public_path().$itemData->img->photos)){
+            File::delete(public_path().$itemData->img->photos);
+        }
+
         return redirect('/admin/products/item')->with('message','刪除產品成功');
     }
     public function itemEditView(Request $request,$id){
 
-        $oldItemData = Product::find($id);
-        $productsData = ProductsType::get();
-        $oldPhotos =  $oldItemData->img ;
+        $productData = Product::with('img')->find($id);
+        $typeData = ProductsType::get();
+        $oldPhotos =  $productData->img ;
+
         // dd($oldPhotos);
-        return view('admin.produucts.item.edit',compact('oldItemData','productsData','oldPhotos'));
+        return view('admin.produucts.item.edit',compact('productData','typeData','oldPhotos'));
     }
     public function itemEdit(Request $request,$id){
-
+        $newRecord = $request->all();
+        if($request->hasFile('main_photo')){
+            $newRecord['main_photo'] = FileController::photosUpload($request->main_photo);
+        }
+        Product::create($newRecord);
         if($request->hasFile('photos')){
             foreach ($request->photos as $key => $value) {
-
-
                 $path = FileController::photosUpload($value);
                 ProductImg::create([
                     'photo' => $path,
@@ -119,10 +128,22 @@ class ProductsController extends Controller
 
 
     public function deleteImg(Request $request){
-        $oldPhotos = ProductImg::find($request->id);
-        if(file_exists(public_path().$request->photo)){
-            File::delete(public_path().$request->photo);
+
+        $imgType = $request->imgType;
+        if($imgType == 'mainPhoto'){
+            $oldPhotos = Product::find($request->id);
+            if(file_exists(public_path().$request->main_photo)){
+                File::delete(public_path().$request->mian_photo);
+            }
+        }else if($imgType == 'photos'){
+            $oldPhotos = ProductImg::find($request->id);
+            if(file_exists(public_path().$request->photo)){
+                File::delete(public_path().$request->photo);
+            }
+            $oldPhotos->delete();
         }
-        $oldPhotos->delete();
+
+        return 'success';
+
     }
 }

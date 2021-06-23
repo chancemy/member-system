@@ -30,7 +30,8 @@
                                         <th>品名</th>
                                         <th>價格</th>
                                         <th>內容</th>
-                                        <th>圖片</th>
+                                        <th>主要圖片</th>
+                                        <th>其他圖片</th>
                                         <th>種類</th>
                                         <th>操作</th>
                                     </tr>
@@ -41,6 +42,7 @@
                                             <td>{{ $item->product_name }}</td>
                                             <td>{{ $item->product_price }}</td>
                                             <td>{{ $item->descript }}</td>
+                                            <td><img width="200px" src="{{ $item->main_photo??'' }}" alt=""></td>
                                             <td>
                                             @foreach ($item->img as $productImg)
                                                 <img width="200px" src="{{ $productImg->photo }}" alt="">
