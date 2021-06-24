@@ -22,6 +22,9 @@ Route::prefix('user')->group(function(){
         Route::get('/create','FrontController@contactUsView' );
         Route::post('/store', 'FrontController@store');
     });
+    Route::prefix('/products')->group(function(){
+        Route::get('item', 'FrontController@productsView');
+    });
 });
 // Auth::routes();
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {

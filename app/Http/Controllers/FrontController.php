@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\ContactUs;
+use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,5 +25,10 @@ class FrontController extends Controller
         }
         ContactUs::create($request->all());
         return redirect('user/contact_us/create')->with('message','完成送出我們會盡快與您聯絡');
+    }
+
+    public function productsView(){
+        $productDatas = Product::with('type')->get();
+        return view('front.product.index',compact('productDatas'));
     }
 }

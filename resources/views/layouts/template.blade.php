@@ -36,6 +36,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ asset('/user/contact_us/create') }}">聯絡我們</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ asset('/user/products/item') }}">商品頁</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
