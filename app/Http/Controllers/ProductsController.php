@@ -77,17 +77,21 @@ class ProductsController extends Controller
     }
     public function itemDelete($id){
         $itemData = Product::with('img')->find($id);
+        $oldPhotos = $itemData->img ;
 
-        $itemData->delete();
-        dd($itemData->main_photo);
-
-        $itemData->img->delete();
+        // // dd($itemData->img);
         if(file_exists(public_path().$itemData->main_photo)){
-            File::delete(public_path().$itemData->mian_photo);
+            File::delete(public_path().$itemData->main_photo);
         }
-        if(file_exists(public_path().$itemData->img->photos)){
-            File::delete(public_path().$itemData->img->photos);
+        foreach ($oldPhotos as $value) {
+            // dd($value->photo);
+            if(file_exists(public_path().$value->photo)){
+                File::delete(public_path().$value->photo);
+            }
+            // dd($value);
+            $value->delete();
         }
+        $itemData->delete();
 
         return redirect('/admin/products/item')->with('message','刪除產品成功');
     }
@@ -101,11 +105,15 @@ class ProductsController extends Controller
         return view('admin.produucts.item.edit',compact('productData','typeData','oldPhotos'));
     }
     public function itemEdit(Request $request,$id){
+        $oldItemData = Product::with('img')->find($id);
         $newRecord = $request->all();
         if($request->hasFile('main_photo')){
+            // dd($oldItemData->main_photo);
+            File::delete(public_path().$oldItemData->main_photo);
             $newRecord['main_photo'] = FileController::photosUpload($request->main_photo);
         }
-        Product::create($newRecord);
+        $oldItemData->update($newRecord);
+        // Product::create($newRecord);
         if($request->hasFile('photos')){
             foreach ($request->photos as $key => $value) {
                 $path = FileController::photosUpload($value);
@@ -116,13 +124,12 @@ class ProductsController extends Controller
             }
         }
 
-
-        $oldItemData = Product::find($id);
-        $oldItemData->product_name = $request->product_name ;
-        $oldItemData->product_price = $request->product_price ;
-        $oldItemData->descript = $request->descript ;
-        $oldItemData->product_type_id = $request->product_type_id;
-        $oldItemData->save();
+        // $oldItemData = Product::find($id);
+        // $oldItemData->product_name = $request->product_name ;
+        // $oldItemData->product_price = $request->product_price ;
+        // $oldItemData->descript = $request->descript ;
+        // $oldItemData->product_type_id = $request->product_type_id;
+        // $oldItemData->save();
         return redirect('/admin/products/item')->with('message','修改產品成功');
     }
 
@@ -132,13 +139,19 @@ class ProductsController extends Controller
         $imgType = $request->imgType;
         if($imgType == 'mainPhoto'){
             $oldPhotos = Product::find($request->id);
-            if(file_exists(public_path().$request->main_photo)){
-                File::delete(public_path().$request->mian_photo);
+            if(file_exists(public_path().$oldPhotos->main_photo)){
+                // dd($oldPhotos->main_photo);
+                File::delete(public_path().$oldPhotos->main_photo);
+                $oldPhotos->main_photo = '';
             }
+            $oldPhotos->save();
         }else if($imgType == 'photos'){
             $oldPhotos = ProductImg::find($request->id);
-            if(file_exists(public_path().$request->photo)){
-                File::delete(public_path().$request->photo);
+
+            if(file_exists(public_path().$oldPhotos->photo)){
+                File::delete(public_path().$oldPhotos->photo);
+                // dd(file_exists(public_path().$request->photo));
+
             }
             $oldPhotos->delete();
         }

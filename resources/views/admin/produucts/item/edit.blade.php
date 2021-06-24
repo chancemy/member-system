@@ -2,6 +2,15 @@
 @section('css')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
 <style>
+    .photo{
+        width: 200px;
+        height: 200px;
+        background-position: center;
+        background-size: cover;
+        border: 1px solid #000;
+        position: relative;
+
+    }
     .del-img-btn {
         position: absolute;
         top: 10px;
@@ -14,6 +23,7 @@
         cursor: pointer;
 
     }
+
 </style>
 @endsection
 @section('content')
@@ -51,8 +61,8 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="form-group col-12">
-                            <label for="photo">產品主要圖片</label>
-                            <input type="file" class="form-control" id="photo" name="photo">
+                            <label for="main_photo">產品主要圖片</label>
+                            <input type="file" class="form-control" id="main_photo" name="main_photo">
                         </div>
                         <div class="form-group col-12">
                             <div class="border border-success">
@@ -76,13 +86,13 @@
 
                                 <label for="descript">產品其他圖片</label>
 
-                                @foreach ($productData->img as $photo)
-                                <div class="col-4" style="position: relative">
-                                    <div data-id="{{ $photo->id }}"
-                                        class="del-img-btn d-flex justify-content-center align items-center">X</div>
-                                    <img src="{{ $photo->photo }}" alt="">
+                                <div class="photo-frame d-flex flex-warp">
+                                    @foreach ($productData->img as $photo)
+                                    <div class="photo" style=" background-image: url('{{ $photo->photo }}');">
+                                        <div data-id="{{ $photo->id }}"class="del-img-btn d-flex justify-content-center align items-center">X</div>
+                                    </div>
+                                    @endforeach
                                 </div>
-                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -141,6 +151,7 @@
                 formData.append('_token','{{ csrf_token() }}');
 
                 if(hasPhotosId){
+
                     id = this.getAttribute('data-id');
                     console.log('找到其他圖片');
                     formData.append('imgType','photos')

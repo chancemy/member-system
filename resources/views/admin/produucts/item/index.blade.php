@@ -1,6 +1,20 @@
 @extends('layouts.app')
 @section('css')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+    <style>
+        .photo-frame{
+            display: flex;
+            flex-wrap: wrap;
+
+        }
+        .photo{
+        width: 100px;
+        height: 100px;
+        background-position: center;
+        background-size: cover;
+        border: 1px solid #000;
+        }
+    </style>
 @endsection
 @section('content')
     <div class="container">
@@ -31,7 +45,7 @@
                                         <th>價格</th>
                                         <th>內容</th>
                                         <th>主要圖片</th>
-                                        <th>其他圖片</th>
+                                        <th style="width: 300px">其他圖片</th>
                                         <th>種類</th>
                                         <th>操作</th>
                                     </tr>
@@ -44,9 +58,11 @@
                                             <td>{{ $item->descript }}</td>
                                             <td><img width="200px" src="{{ $item->main_photo??'' }}" alt=""></td>
                                             <td>
-                                            @foreach ($item->img as $productImg)
-                                                <img width="200px" src="{{ $productImg->photo }}" alt="">
-                                            @endforeach
+                                                <div class="photo-frame">
+                                                    @foreach ($item->img as $productImg)
+                                                        <div class="photo" style=" background-image: url('{{ $productImg->photo }}');"></div>
+                                                    @endforeach
+                                                </div>
                                             </td>
                                             <td>{{ $item->type->type_name }}</td>
                                             <td>

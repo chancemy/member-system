@@ -17,6 +17,14 @@
                 <form action="{{ asset('/admin/products/item/update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
+                        <label for="product_type">種類</label>
+                        <select class="form-control" id="product_type" name="product_type_id">
+                            @foreach ($productsData as $item)
+                                <option value="{{ $item->id }}">{{ $item->type_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
                       <label for="product_name">品名</label>
                       <input type="text" class="form-control" id="product_name" aria-describedby="emailHelp" placeholder="輸入產品種類" required name="product_name">
                     </div>
@@ -36,14 +44,7 @@
                         <label for="photos">產品其他圖片</label>
                         <input multiple type="file" class="form-control" id="photos"  name="photos[]">
                     </div>
-                    <div class="form-group">
-                        <label for="product_type">種類</label>
-                        <select class="form-control" id="product_type" name="product_type_id">
-                            @foreach ($productsData as $item)
-                                <option value="{{ $item->id }}">{{ $item->type_name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+
                     <button type="submit" class="btn btn-primary">新增</button>
                 </form>
             </div>
