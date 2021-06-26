@@ -1,0 +1,167 @@
+.container.custom-container-width {
+  max-width: 1280px;
+  padding: 0px;
+}
+
+.container.custom-container-width-b {
+  max-width: 1536px;
+  padding: 96px 20px;
+}
+
+.container.custom-container-width-c {
+  max-width: 1536px;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+  padding: 1.25rem 0 0 0;
+  height: 100%;
+}
+
+li {
+  font-size: 1rem;
+}
+
+h1 {
+  font-weight: 500;
+}
+
+p {
+  font-size: 16px;
+}
+
+.block-frame {
+  padding: 96px 20px;
+}
+
+img {
+  width: 100%;
+}
+
+svg {
+  width: 40px;
+  height: 40px;
+}
+
+.svg-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.my-line-heigh {
+  line-height: 16px;
+}
+
+#custom-row {
+  padding: 0 4px 4px 4px;
+}
+
+button:focus {
+  outline: none !important;
+  outline: none  -webkit-focus-ring-color !important;
+}
+
+.my-font-size {
+  font-size: 1rem;
+}
+
+.my-circle {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  background-color: #e0e7ff;
+  color: #7a7ef4;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.my-circle .pic-frame {
+  width: 4rem;
+  height: 4rem;
+}
+
+.my-color-btn {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+}
+
+.img-center {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 20px;
+}
+
+.img-center .circle-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #e0e7ff;
+  color: #7a7ef4;
+}
+
+.img-center .circle-photo .pic-frame {
+  width: 40px;
+  height: 40px;
+}
+
+textarea {
+  overflow: auto;
+  resize: none !important;
+}
+
+.I {
+  position: relative;
+}
+
+.my-mask {
+  -webkit-filter: grayscale(1) contrast(0.5) opacity(1);
+          filter: grayscale(1) contrast(0.5) opacity(1);
+}
+
+.my-form-pos {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.my-border {
+  color: #e5e7eb;
+  z-index: 2;
+}
+
+.B .container .row .col-sm-12 p {
+  text-align: center;
+}
+
+.B .container .row .col-sm-12 .blue-line {
+  width: 64px;
+  height: 4px;
+  background-color: #6366F1;
+}
+/*# sourceMappingURL=bootstrap.css.map */

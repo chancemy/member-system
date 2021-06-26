@@ -1,6 +1,8 @@
 @extends('/template.temp-index')
 @section('shopcart-css')
-    <link rel="stylesheet" href="./css/step2.css">
+
+    <link rel="stylesheet" href="{{ asset('css/step2.css') }}">
+
 @endsection
 @section('shopcart-step')
 <main>
@@ -223,10 +225,10 @@
       </div>
       <div class="my-hr"></div>
       <div class="opctions d-flex justify-content-between align-items-center">
-        <a href="{{ asset('step1') }}">
+        <a href="{{ asset('user/shop_cart/step1') }}">
           <button class="btn btn-primary" type="submit">上一步</button>
         </a>
-        <a href="{{ asset('step3') }}">
+        <a href="{{ asset('user/shop_cart/step3') }}">
           <button class="btn btn-primary" type="submit">下一步</button>
         </a>
       </div>

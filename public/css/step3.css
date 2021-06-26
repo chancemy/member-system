@@ -1,0 +1,167 @@
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0%;
+  min-height: calc(100vh - 419px);
+}
+
+.box {
+  width: 100%;
+  height: 200px;
+  background-color: yellow;
+  margin-bottom: 10px;
+}
+
+main {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #d1d5db;
+  padding: 5% 10%;
+  transition: 0.1s;
+}
+
+@media(max-width:1026px) {
+  main {
+    padding: 5% 0px;
+  }
+}
+
+a:active {
+  color: black !important;
+}
+
+.cart-container {
+  max-width: 1140px;
+  margin: auto;
+  padding: 50px;
+  border-radius: 10px;
+  background-color: #f3f4f6;
+}
+
+.my-step {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.my-step-num {
+  width: 2rem;
+  height: 2rem;
+  margin: 0px 1rem;
+  background-color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.num {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.num1 .my-step-num{
+  background-color: #13b981;
+  color: white;
+}
+.num2 .my-step-num{
+  background-color: #13b981;
+  color: white;
+}
+.num3 .my-step-num{
+  background-color: #13b981;
+  color: white;
+}
+.num1::before {
+  content: '';
+  width: calc(calc(100% - 4rem) / 2);
+  height: 0.5rem;
+  border-radius: 0 5px 5px 0;
+  /* background-color: #e5e7eb; */
+}
+
+.num1::after {
+  content: '';
+  width: calc(calc(100% - 4rem) / 2);
+  height: 0.5rem;
+  border-radius: 5px 0 0 5px;
+  background-color: #6ee7b7;
+}
+
+.num2::before {
+  content: '';
+  width: calc(calc(100% - 4rem) / 2);
+  height: 0.5rem;
+  border-radius: 0 5px 5px 0;
+  background-color: #6ee7b7;
+}
+
+.num2::after {
+  content: '';
+  width: calc(calc(100% - 4rem) / 2);
+  height: 0.5rem;
+  border-radius: 5px 0 0 5px;
+  background-color: #6ee7b7;
+}
+
+.num3::before {
+  content: '';
+  width: calc(calc(100% - 4rem) / 2);
+  height: 0.5rem;
+  border-radius: 0 5px 5px 0;
+  background-color: #6ee7b7
+}
+
+.num3::after {
+  content: '';
+  width: calc(calc(100% - 4rem) / 2);
+  height: 0.5rem;
+  border-radius: 5px 0 0 5px;
+  background-color: #6ee7b7
+}
+
+.num4::before {
+  content: '';
+  width: calc(calc(100% - 4rem) / 2);
+  height: 0.5rem;
+  border-radius: 0 5px 5px 0;
+  background-color: #e5e7eb;
+}
+
+.num4::after {
+  content: '';
+  width: calc(calc(100% - 4rem) / 2);
+  height: 0.5rem;
+  border-radius: 5px 0 0 5px;
+  /* background-color: #e5e7eb; */
+}
+
+.my-hr {
+  width: 100%;
+  height: 1px;
+  margin: 2rem 0;
+  background-color: gray;
+  opacity: 0.4;
+}
+.cart-container span{
+    min-width: 3rem;
+    text-align: end;
+}

@@ -13,11 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('front/index');
-});
+Route::get('/', 'FrontController@index');
 
 Route::prefix('user')->group(function(){
+    Route::prefix('/shop_cart')->group(function(){
+        Route::get('/step1','FrontController@step1');
+        Route::get('/step2','FrontController@step2');
+        Route::get('/step3','FrontController@step3');
+        Route::get('/step4','FrontController@step4');
+    });
+
     Route::prefix('/contact_us')->group(function(){
         Route::get('/create','FrontController@contactUsView' );
         Route::post('/store', 'FrontController@store');

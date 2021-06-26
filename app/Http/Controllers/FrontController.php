@@ -10,9 +10,30 @@ use Illuminate\Support\Facades\Validator;
 
 class FrontController extends Controller
 {
+    public function index(){
+        $productDatas = Product::with('img')->with('type')->get();
+        return view('front.index.index',compact('productDatas'));
+    }
+    public function step1(){
+        return view('front.shopcart.shopcart-step1');
+    }
+    public function step2(){
+        return view('front.shopcart.shopcart-step2');
+
+    }
+    public function step3(){
+        return view('front.shopcart.shopcart-step3');
+
+    }
+    public function step4(){
+        return view('front.shopcart.shopcart-step4');
+
+    }
     public function contactUsView(){
         return view('front.contact_us.index');
     }
+
+
     public function store(Request $request){
         $boolean = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
@@ -25,7 +46,7 @@ class FrontController extends Controller
             return redirect()->back()->withErrors($boolean->errors());
         }
         ContactUs::create($request->all());
-        return redirect('user/contact_us/create')->with('message','完成送出我們會盡快與您聯絡');
+        return redirect('/#contact_us')->with('message','完成送出我們會盡快與您聯絡')->with('point','contact');
     }
 
     public function productsView(Request $request){
