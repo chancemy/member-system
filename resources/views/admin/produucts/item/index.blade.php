@@ -41,11 +41,14 @@
                             <table id="example" class="display" style="width:100%">
                                 <thead>
                                     <tr>
+                                        <th>至頂</th>
                                         <th>品名</th>
                                         <th>價格</th>
+                                        <th>顏色</th>
+                                        <th>尺寸</th>
                                         <th>內容</th>
                                         <th>主要圖片</th>
-                                        <th style="width: 300px">其他圖片</th>
+                                        <th>其他圖片</th>
                                         <th>種類</th>
                                         <th>操作</th>
                                     </tr>
@@ -53,10 +56,15 @@
                                 <tbody>
                                     @foreach ($productsData as $key => $item)
                                         <tr>
+                                            <td><input type="checkbox" id="is_top" name="is_top" value="1"></td>
                                             <td>{{ $item->product_name }}</td>
                                             <td>{{ $item->product_price }}</td>
+                                            <td>123</td>
+                                            <td>123</td>
                                             <td>{{ $item->descript }}</td>
-                                            <td><img width="200px" src="{{ $item->main_photo??'' }}" alt=""></td>
+                                            <td>
+                                                <div class="photo" style=" background-image: url('{{ $item->main_photo??'' }}');"></div>
+                                            </td>
                                             <td>
                                                 <div class="photo-frame">
                                                     @foreach ($item->img as $productImg)
