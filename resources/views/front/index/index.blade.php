@@ -518,6 +518,7 @@
                             <h3 style="font-size: 12px;" class="card-title">{{ $productData->type->type_name }}</h3>
                             <h2 style="font-size: 18px;">{{ $productData->product_name }}</h2>
                             <p style="font-size: 16px;" class="card-text">NT$ {{ $productData->product_price }}</p>
+                            <button type="button" class="btn btn-info">加入購物車</button>
                         </div>
                     </div>
                 </div>
