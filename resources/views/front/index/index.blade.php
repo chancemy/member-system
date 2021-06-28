@@ -518,7 +518,7 @@
                             <h3 style="font-size: 12px;" class="card-title">{{ $productData->type->type_name }}</h3>
                             <h2 style="font-size: 18px;">{{ $productData->product_name }}</h2>
                             <p style="font-size: 16px;" class="card-text">NT$ {{ $productData->product_price }}</p>
-                            <button type="button" class="btn btn-info">加入購物車</button>
+                            <button type="button" data-id="{{ $productData->id }}" class="add-btn btn btn-info ">加入購物車</button>
                         </div>
                     </div>
                 </div>
@@ -618,4 +618,33 @@
         </div>
     </div>
 </main>
+@endsection
+@section('shopcart-js')
+    <script>
+        var addBtns = document.querySelectorAll('.add-btn');
+        console.log(addBtns);
+
+        addBtns.forEach(function (addBtn) {
+            addBtn.addEventListener('click',function () {
+                var productId = this.getAttribute('data-id');
+                var formData = new FormData();
+                formData.append('_token','{{ csrf_token() }}');
+                formData.append('productId',productId);
+                fetch('/user/shop_cart/add',{
+                    'method':'POST',
+                    'body':formData,
+                }).then(function (response) {
+                    return response.text();
+                }).then(function (result) {
+                    if(result == 'success'){
+                        alert('加入成功');
+                    }else{
+                        alert('加入失敗');
+                    };
+                })
+            })
+
+
+        })
+    </script>
 @endsection

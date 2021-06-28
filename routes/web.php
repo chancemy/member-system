@@ -21,6 +21,11 @@ Route::prefix('user')->group(function(){
         Route::get('/step2','FrontController@step2');
         Route::get('/step3','FrontController@step3');
         Route::get('/step4','FrontController@step4');
+        Route::post('/add', 'FrontController@add');
+        Route::post('/update', 'FrontController@update');
+        Route::get('/content', 'FrontController@content');
+        Route::get('delete', 'FrontController@delete');
+
     });
 
     Route::prefix('/contact_us')->group(function(){

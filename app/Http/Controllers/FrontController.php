@@ -15,7 +15,8 @@ class FrontController extends Controller
         return view('front.index.index',compact('productDatas'));
     }
     public function step1(){
-        return view('front.shopcart.shopcart-step1');
+        $productCarts = \Cart::getContent()->sortKeys();
+        return view('front.shopcart.shopcart-step1',compact('productCarts'));
     }
     public function step2(){
         return view('front.shopcart.shopcart-step2');
@@ -29,6 +30,44 @@ class FrontController extends Controller
         return view('front.shopcart.shopcart-step4');
 
     }
+
+    public function add(Request $request){
+        $product = Product::find($request->productId);
+        // dd($product);
+
+        \Cart::add(array(
+            'id' => $product->id, // inique row ID
+            'name' => $product->product_name,
+            'price' => $product->product_price,
+            'quantity' => 1,
+            'attributes' => array(
+                'main_photo' => $product->main_photo,
+            )
+        ));
+        return 'success' ;
+
+    }
+
+    public function update(Request $request){
+        // dd($request->productId);
+        \Cart::update($request->productId, array(
+            'quantity' => array(
+                'relative' => false,
+                'value' => $request->productQty,
+            ),
+          ));
+        return 'success' ;
+    }
+
+    public function delete(){
+        \Cart::clear();
+    }
+
+    public function content(){
+        $cartCollection = \Cart::getContent();
+        dd($cartCollection);
+    }
+
     public function contactUsView(){
         return view('front.contact_us.index');
     }
