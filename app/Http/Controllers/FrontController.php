@@ -6,24 +6,69 @@ use App\ContactUs;
 use App\Product;
 use App\ProductsType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class FrontController extends Controller
 {
+
+    public static function countCart(){
+
+        $totalQty = \Cart::getTotalQuantity();
+        $priceTotal = \Cart::getSubTotal();
+        $shipingFee = $priceTotal > 1000 ? 0 : 60 ;
+        $total = $priceTotal + $shipingFee ;
+
+        return compact('totalQty','priceTotal','shipingFee','total');
+    }
+
     public function index(){
         $productDatas = Product::with('img')->with('type')->get();
         return view('front.index.index',compact('productDatas'));
     }
+
     public function step1(){
         $productCarts = \Cart::getContent()->sortKeys();
         return view('front.shopcart.shopcart-step1',compact('productCarts'));
     }
     public function step2(){
-        return view('front.shopcart.shopcart-step2');
+        // $countCart =  FrontController::countCart();
+        $totalQty = \Cart::getTotalQuantity();
+        $priceTotal = \Cart::getSubTotal();
+        $shipingFee = $priceTotal > 1000 ? 0 : 60 ;
+        $total = $priceTotal + $shipingFee ;
+        // dd($countCart);
+        return view('front.shopcart.shopcart-step2',$this->countCart());
+
+    }
+    public function step2check(Request $request){
+        // dd($request->all());
+        Session::put('payment',$request->payRadios);
+        Session::put('shipment',$request->shipRadios);
+        // dd(session()->all());
+        return redirect('/user/shop_cart/step3');
 
     }
     public function step3(){
-        return view('front.shopcart.shopcart-step3');
+        $totalQty = \Cart::getTotalQuantity();
+        $priceTotal = \Cart::getSubTotal();
+        $shipingFee = $priceTotal > 1000 ? 0 : 60 ;
+        $total = $priceTotal + $shipingFee ;
+        if(Session::has('payment')&&Session::has('shipment')){
+
+            return view('front.shopcart.shopcart-step3',$this->countCart());
+
+        }else{
+            return view('front.shopcart.shopcart-step2');
+        }
+
+    }
+    public function step3check(Request $request){
+        dd($request->all());
+        // Session::put('payment',$request->payRadios);
+        // Session::put('shipment',$request->shipRadios);
+        // dd(session()->all());
+        // return redirect('/user/shop_cart/step3');
 
     }
     public function step4(){

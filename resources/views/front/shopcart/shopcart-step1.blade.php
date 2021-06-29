@@ -71,12 +71,9 @@
                         <div class="col-6 d-flex justify-content-end align-items-center">
                             <div class="item-quantiys d-flex justify-content-between">
                                 <div class="quantiys d-flex justify-content-around align-items-center">
-                                    <div class="minus">-</div>
-                                    <div class="num-value ml-2 mr-2">
-                                        <input data-id="{{ $productCart->id }}" class="on-change" id="burrito-num" type="number" value="{{ $productCart->quantity }}"
-                                            style="width: 2rem;">
-                                    </div>
-                                    <div class="plus">+</div>
+                                    <button class="minus">-</button>
+                                        <input data-id="{{ $productCart->id }}" class="on-change num-value ml-2 mr-2" id="burrito-num" type="number" value="{{ $productCart->quantity }}"style="width: 2rem;">
+                                    <button class="plus">+</button>
                                 </div>
                                 <div class="d-flex align-items-center ml-3 ">$<span
                                         class="price">{{ $productCart->price}}</span></div>
@@ -87,95 +84,6 @@
             </div>
             <div class="my-hr"></div>
             @endforeach
-            {{-- <div class="my-hr" style="visibility: hidden;"></div>
-            <div class="item d-flex justify-content-between align-items-center">
-                <div class="container" style="padding: 0px;">
-                    <div class="row no-gutters">
-                        <div class="col-6 d-flex justify-content-start align-items-center">
-                            <div class="item-photo mr-2">
-                                <img src="./img/捲餅.jpg" alt="" style="width: 4rem; height: 4rem; border-radius: 50%;">
-                            </div>
-                            <div class="item-data">
-                                <div class="item-name">Chicken momo</div>
-                                <div class="item-nmuber">#41551</div>
-                            </div>
-                        </div>
-                        <div class="col-6 d-flex justify-content-end align-items-center">
-                            <div class="item-quantiys d-flex justify-content-between">
-                                <div class="quantiys d-flex justify-content-around align-items-center">
-                                    <div class="minus">-</div>
-                                    <div class="num-value ml-2 mr-2">
-                                        <input class="on-change" id="burrito-num" type="number" value="1"
-                                            style="width: 2rem;">
-                                    </div>
-                                    <div class="plus">+</div>
-                                </div>
-                                <div class="d-flex align-items-center ml-3 ">$<span class="price">20</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="my-hr"></div>
-            <div class="item d-flex justify-content-between align-items-center">
-                <div class="container" style="padding: 0px;">
-                    <div class="row no-gutters">
-                        <div class="col-6 d-flex justify-content-start align-items-center">
-                            <div class="item-photo mr-2">
-                                <img src="./img/咖哩.jpg" alt="" style="width: 4rem; height: 4rem; border-radius: 50%;">
-                            </div>
-                            <div class="item-data">
-                                <div class="item-name">Chicken momo</div>
-                                <div class="item-nmuber">#41551</div>
-                            </div>
-                        </div>
-                        <div class="col-6 d-flex justify-content-end align-items-center">
-                            <div class="item-quantiys d-flex justify-content-between">
-                                <div class="quantiys d-flex justify-content-around align-items-center">
-                                    <div class="minus">-</div>
-                                    <div class="num-value ml-2 mr-2">
-                                        <input class="on-change" id="gali-num" type="number" value="1"
-                                            style="width: 2rem;">
-                                    </div>
-                                    <div class="plus">+</div>
-                                </div>
-                                <div class="d-flex align-items-center ml-3">
-                                    $<span class="price">10.50</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="my-hr"></div>
-            <div class="item d-flex justify-content-between align-items-center">
-                <div class="container" style="padding: 0px;">
-                    <div class="row no-gutters">
-                        <div class="col-6 d-flex justify-content-start align-items-center">
-                            <div class="item-photo mr-2">
-                                <img src="./img/甜點.jpg" alt="" style="width: 4rem; height: 4rem; border-radius: 50%;">
-                            </div>
-                            <div class="item-data">
-                                <div class="item-name">Chicken momo</div>
-                                <div class="item-nmuber">#41551</div>
-                            </div>
-                        </div>
-                        <div class="col-6 d-flex justify-content-end align-items-center">
-                            <div class="item-quantiys d-flex justify-content-between">
-                                <div class="quantiys d-flex justify-content-around align-items-center">
-                                    <div class="minus">-</div>
-                                    <div class="num-value ml-2 mr-2">
-                                        <input class="on-change" id="sweet-num" type="number" value="1"
-                                            style="width: 2rem;">
-                                    </div>
-                                    <div class="plus">+</div>
-                                </div>
-                                <div class="d-flex align-items-center ml-3 ">$<span class="price">10.50</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="my-hr"></div> --}}
         </div>
         <div class="total">
             <div class="container p-0">
@@ -222,6 +130,9 @@
     var price = 0 ;
     var elesPrice = document.querySelectorAll('.price');
     var initPrice = [] ;
+
+    var plusBtns =  onChange;
+    console.log(plusBtns.parentElement.querySelector(''));
     console.log(elesPrice);
     elesPrice.forEach(function(ele, index){
       console.log(ele);
@@ -243,7 +154,7 @@
             response.text();
         }).then(function (result) {
             if(result == 'success'){
-                return 'success';
+                return productQty;
             }else{
                 return 'fald'
             }
@@ -298,7 +209,7 @@
     }
 
     function isShipping(shippingValue){
-      if(shippingValue >= 500){
+      if(shippingValue >= 1000){
         return 0;
       }else{
         return 60;

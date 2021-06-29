@@ -19,8 +19,15 @@ Route::prefix('user')->group(function(){
     Route::prefix('/shop_cart')->group(function(){
         Route::get('/step1','FrontController@step1');
         Route::get('/step2','FrontController@step2');
+        Route::post('/step2/check','FrontController@step2check');
         Route::get('/step3','FrontController@step3');
+        Route::post('/step3/check','FrontController@step3check');
         Route::get('/step4','FrontController@step4');
+
+
+
+
+        // shopCart session
         Route::post('/add', 'FrontController@add');
         Route::post('/update', 'FrontController@update');
         Route::get('/content', 'FrontController@content');
