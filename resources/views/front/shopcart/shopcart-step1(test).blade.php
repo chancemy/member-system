@@ -122,123 +122,39 @@
 @endsection
 @section('shopcart-js')
 <script>
-
+    var inputBtns = document.querySelectorAll('.on-change');
     var plus = document.querySelectorAll('.plus');
     var minus = document.querySelectorAll('.minus');
-    var onChange = document.querySelectorAll('.on-change');
-    var itemQty = 0 ;
-    var price = 0 ;
-    var elesPrice = document.querySelectorAll('.price');
-    var initPrice = [] ;
 
-    var plusBtns =  onChange;
-
-    elesPrice.forEach(function(ele, index){
-      console.log(ele);
-      initPrice[index] = elesPrice[index].innerHTML;
-    })
-    window.addEventListener('load',function () {
-        totalCount();
-    })
-    function sentQty(item,productQty) {
-        var formData = new FormData();
-        console.log(item.getAttribute('data-id')+'ID');
-        formData.append('_token','{{ csrf_token() }}');
-        formData.append('productId',item.getAttribute('data-id'));
-        formData.append('productQty',productQty);
-        fetch('/user/shop_cart/update',{
-            'method':'post',
-            'body':formData
-        }).then(function (response) {
-            response.text();
-        }).then(function (result) {
-            if(result == 'success'){
-                return productQty;
-            }else{
-                return 'fald'
-            }
+    inputBtns.forEach(function (inputBtn) {
+        inputBtn.addEventListener('change',function () {
+            console.log(inputBtn.value);
+            var inputNum = inputBtn.value;
         })
-    }
+    })
 
-    onChange.forEach((item, index) => {
-      item.onchange = function () {
-        itemQty = Number(item.value);
-        itemQty = check(itemQty);
-        sentQty(item,itemQty);
-        onChange[index].value = itemQty;
-        elesPrice[index].innerHTML = itemQty * initPrice[index];
-        totalCount();
-      }
-    });
-    plus.forEach((item, index) => {
-      item.onclick = function () {
-        // console.log(item);
-        itemQty = Number(onChange[index].value);
-        itemQty += 1 ;
-        var input = this.parentElement.querySelector('input');
-        console.log(input);
-        sentQty(input,itemQty);
-        onChange[index].value = itemQty;
-        elesPrice[index].innerHTML = itemQty * initPrice[index];
-        totalCount();
-      }
+    plus.forEach(function (plusBtn) {
+        plustBtn.addEventListener('click',function () {
+            calcBtn(plus,1);
+        })
+    })
 
-    });
-    minus.forEach((item, index) => {
-      item.onclick = function () {
-        itemQty = Number(onChange[index].value);
-        itemQty -= 1 ;
-        itemQty = check(itemQty);
-        var input = this.parentElement.querySelector('input');
-        console.log(input);
-        sentQty(input,itemQty);
-        console.log(itemQty);
-        onChange[index].value = itemQty;
-        elesPrice[index].innerHTML = itemQty * initPrice[index];
-        totalCount();
-      }
-    });
+    minus.forEach(function (minusBtn) {
+        minustBtn.addEventListener('click',function () {
+            calcBtn(minus,-1);
+        })
+    })
 
-    function check(itemQty){
-      if(itemQty < 1){
-          itemQty = 1
-          console.log(itemQty+'有檢察');
-        }
-        return itemQty;
-    }
 
-    function isShipping(shippingValue){
-      if(shippingValue >= 1000){
-        return 0;
-      }else{
-        return 60;
-      }
-    }
-
-    function totalCount() {
-      var totalItems = document.querySelector('#total-items');
-      var itemsPrice = document.querySelector('#items-price');
-      var shipping = document.querySelector('#shipping');
-      var totalPrice = document.querySelector('#total-price');
-      var totalItemsValue = 0;
-      var itemPriceValue = 0;
-      var shippingValue = 0;
-      var totalPriceValue = 0;
-      onChange.forEach(ele => {
-        itemQty = Number(ele.value);
-        totalItemsValue += itemQty ;
-        totalItems.innerHTML = totalItemsValue;
-        console.log('總數');
-      });
-      elesPrice.forEach(ele => {
-        price = Number(ele.innerHTML);
-        itemPriceValue += price ;
-        itemsPrice.innerHTML = itemPriceValue.toLocaleString();
-        console.log('總計');
-      });
-      shippingValue = isShipping(itemPriceValue);
-      shipping.innerHTML = shippingValue;
-      totalPrice.innerHTML = (itemPriceValue + shippingValue).toLocaleString() ;
+    function calcBtn(eles,calc) {
+        eles.forEach(function (ele) {
+            ele.addEventListener('click',function () {
+                var input =  ele.parentElement.querySelector('input');
+                var itemQty =  input.value;
+                itemQty = itemQty + calc ;
+                console.log(itemQty);
+            })
+        })
     }
 </script>
 @endsection

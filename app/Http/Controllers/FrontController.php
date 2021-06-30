@@ -29,6 +29,7 @@ class FrontController extends Controller
 
     public function step1(){
         $productCarts = \Cart::getContent()->sortKeys();
+        // return view('front.shopcart.shopcart-step1(test)',compact('productCarts'));
         return view('front.shopcart.shopcart-step1',compact('productCarts'));
     }
     public function step2(){

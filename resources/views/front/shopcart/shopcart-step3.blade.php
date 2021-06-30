@@ -67,18 +67,25 @@
             <label for="email">Email</label>
             <input type="email" class="form-control" required name="email" id="email" placeholder="name@example.com">
           </div>
-          <div class="form-row city-selector-set">
-            <div class="col-4">
-                <!-- 縣市選單 -->
-                <select class="form-control county"></select>
+          <div class="city-selector-set">
+            <div class="form-group row">
+                <div class="col-4">
+                    <!-- 縣市選單 -->
+                    <select class="form-control county"></select>
+                </div>
+                <div class="col-4">
+                    <!-- 區域選單 -->
+                    <select class="form-control district"></select>
+                </div>
+                <div class="col-4">
+                    <!-- 郵遞區號欄位 (建議加入 readonly 屬性，防止修改) -->
+                    <input class="form-control zipcode" type="text" size="3" readonly placeholder="郵遞區號">
+                </div>
             </div>
-            <div class="col-4">
-                <!-- 區域選單 -->
-                <select class="form-control district"></select>
-            </div>
-            <div class="col-4">
-                <!-- 郵遞區號欄位 (建議加入 readonly 屬性，防止修改) -->
-                <input class="form-control zipcode" type="text" size="3" readonly placeholder="郵遞區號">
+            <div class="form-group row">
+                <div class="col-12 ">
+                    <input type="text" class="form-control" required name="address" id="address" placeholder="請輸入地址">
+                </div>
             </div>
           </div>
         <button class="d-none" id="hideSubmit" type="submit"></button>
