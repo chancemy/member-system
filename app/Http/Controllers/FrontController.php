@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\ContactUs;
+use App\Order;
 use App\Product;
+use App\ContactUs;
+use App\OrderDetails;
 use App\ProductsType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -65,11 +67,45 @@ class FrontController extends Controller
 
     }
     public function step3check(Request $request){
-        dd($request->all());
-        // Session::put('payment',$request->payRadios);
-        // Session::put('shipment',$request->shipRadios);
-        // dd(session()->all());
-        // return redirect('/user/shop_cart/step3');
+        // dd($request->all());
+        $order = Order::create([
+            'order_no'=>'DP'.time().rand(1,999),
+            'name'=>$request->name,
+            'phone'=>$request->phone,
+            'email'=>$request->email,
+            'county'=>$request->county,
+            'district'=>$request->district,
+            'zipcode'=>$request->zipcode,
+            'address'=>$request->address,
+            'price'=>999999999,
+            'pay_type'=>Session::get('payment'),
+            'shipping'=>Session::get('shipment'),
+            'shipping_fee'=>9999999,
+            'shipping_status_id'=>0,
+            'order_status_id'=>0
+        ]);
+
+        $cartProducts = \Cart::getContent();
+        $totalPrice = 0;
+        $totalQty = 0;
+        foreach ($cartProducts as $cartProduct) {
+            $product = Product::find($cartProduct->id);
+            $totalPrice += $product->product_price * $cartProduct->quantity;
+            $orderDetails = OrderDetails::create([
+                'order_id'=>$order->id,
+                'product_id'=>$product->id,
+                'qty'=>$cartProduct->quantity,
+                'old'=>json_encode($product)
+            ]);
+        }
+        $order->update([
+            'price'=>$totalPrice,
+            'shipping_fee' => $totalPrice > 1000 ? 0 : 60,
+        ]);
+        // Session::forget('payment');
+        // Session::forget('shipment');
+        // \Cart::clear();
+        return redirect('/user/shop_cart/step4')->with('order',$order);
 
     }
     public function step4(){

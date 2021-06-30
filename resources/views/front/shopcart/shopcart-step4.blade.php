@@ -54,111 +54,72 @@
         <div class="my-hr"></div>
         <div class="details ">
             <h3>訂單明細</h3>
-            <div class="my-hr" style="visibility: hidden;"></div>
-            <div class="item d-flex justify-content-between align-items-center">
-            <div class="container" style="padding: 0px;">
-                <div class="row no-gutters">
-                <div class="col-6 d-flex justify-content-start align-items-center">
-                    <div class="item-photo mr-2">
-                    <img src="./img/捲餅.jpg" alt="" style="width: 4rem; height: 4rem; border-radius: 50%;">
+                @php
+                    $qty = 0;
+                    $order = Session::get('order');
+                @endphp
+                @foreach ($order->details as $detail)
+                    @php
+                        $product = json_decode($detail->old);
+                        $qty += $detail->qty;
+                        // dd($product);
+                    @endphp
+                    <div class="my-hr" style="visibility: hidden;"></div>
+                        <div class="item d-flex justify-content-between align-items-center">
+                            <div class="container" style="padding: 0px;">
+                                <div class="row no-gutters">
+                                    <div class="col-6 d-flex justify-content-start align-items-center">
+                                        <div class="item-photo mr-2">
+                                            <img src="{{ asset($detail->main_photo) }}" alt="" style="width: 4rem; height: 4rem; border-radius: 50%;">
+                                        </div>
+                                        <div class="item-data">
+                                            <div class="item-name">{{$product->product_name }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 d-flex justify-content-end align-items-center">
+                                        <div class="item-quantiys d-flex justify-content-between">
+                                            <div class="quantiys d-flex justify-content-around align-items-center">
+                                                <span>x</span>
+                                                <div class="final-totla-num">{{ $detail->old }}</div>
+                                            </div>
+                                        <div class="price d-flex align-items-center ml-3 " >$<span id="burrito-price">{{ $detail->old * $product->product_price }}</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="item-data">
-                    <div class="item-name">Chicken momo</div>
-                    <div class="item-nmuber">#41551</div>
-                    </div>
-                </div>
-                <div class="col-6 d-flex justify-content-end align-items-center">
-                    <div class="item-quantiys d-flex justify-content-between">
-                    <div class="quantiys d-flex justify-content-around align-items-center">
-                        <span>x</span>
-                        <div class="final-totla-num">1</div>
-                    </div>
-                    <div class="price d-flex align-items-center ml-3 " >$<span id="burrito-price">10.50</span></div>
-                    </div>
-                </div>
-                </div>
-            </div>
-            </div>
-            <div class="my-hr"></div>
-            <div class="item d-flex justify-content-between align-items-center">
-            <div class="container" style="padding: 0px;">
-                <div class="row no-gutters">
-                <div class="col-6 d-flex justify-content-start align-items-center">
-                    <div class="item-photo mr-2">
-                    <img src="./img/咖哩.jpg" alt="" style="width: 4rem; height: 4rem; border-radius: 50%;">
-                    </div>
-                    <div class="item-data">
-                    <div class="item-name">Chicken momo</div>
-                    <div class="item-nmuber">#41551</div>
-                    </div>
-                </div>
-                <div class="col-6 d-flex justify-content-end align-items-center">
-                    <div class="item-quantiys d-flex justify-content-between">
-                    <div class="quantiys d-flex justify-content-around align-items-center">
-                        <span>x</span>
-                        <div class="final-totla-num">1</div>
-                    </div>
-                    <div class="price d-flex align-items-center ml-3">
-                        $<span id="gali-price">10.50</span></div>
-                    </div>
-                </div>
-                </div>
-            </div>
-            </div>
-            <div class="my-hr"></div>
-            <div class="item d-flex justify-content-between align-items-center">
-            <div class="container" style="padding: 0px;">
-                <div class="row no-gutters">
-                <div class="col-6 d-flex justify-content-start align-items-center">
-                    <div class="item-photo mr-2">
-                    <img src="./img/甜點.jpg" alt="" style="width: 4rem; height: 4rem; border-radius: 50%;">
-                    </div>
-                    <div class="item-data">
-                    <div class="item-name">Chicken momo</div>
-                    <div class="item-nmuber">#41551</div>
-                    </div>
-                </div>
-                <div class="col-6 d-flex justify-content-end align-items-center">
-                    <div class="item-quantiys d-flex justify-content-between">
-                    <div class="quantiys d-flex justify-content-around align-items-center">
-                        <span>x</span>
-                        <div class="final-totla-num">1</div>
-                    </div>
-                    <div class="price d-flex align-items-center ml-3 " >$<span id="sweet-price" >10.50</span></div>
-                    </div>
-                </div>
-                </div>
-            </div>
-            </div>
+                @endforeach
             <div class="my-hr"></div>
         </div>
         <div class="final-buyer-data">
             <div class="container p-0">
             <h3>寄送資料</h3>
+
             <div class="row no-gutters">
                 <div class="col-1">
                 <span>姓名</span>
                 </div>
                 <div class="col-11">
-                <span>王小明</span>
+                <span>{{ $order->name }}</span>
                 </div>
                 <div class="col-1">
                 <span>電話</span>
                 </div>
                 <div class="col-11">
-                <span>012345678</span>
+                <span>{{ $order->phone }}</span>
                 </div>
                 <div class="col-1">
                 <span>Email</span>
                 </div>
                 <div class="col-11">
-                <span>123@gmail.com</span>
+                <span>{{ $order->email }}</span>
                 </div>
                 <div class="col-1">
                 <span>地址</span>
                 </div>
                 <div class="col-11">
-                <span>台中市豐原區....</span>
+                <span>{{ ($order->zipcode).($order->county).($order->district).($order->address) }}</span>
                 </div>
             </div>
             </div>
@@ -170,19 +131,19 @@
                 <div class="col-2">
                 <div class="to-num d-flex justify-content-between align-items-center">
                     <span>數量:</span>
-                    <div class="value ml-3" id="total-items"></div>
+                    <div class="value ml-3" id="total-items">{{  $qty }}</div>
                 </div>
                 <div class="items-price d-flex justify-content-between align-items-center">
                     <span>小計:</span>
-                    <div class="value ml-3" id="items-price"></div>
+                    <div class="value ml-3" id="items-price">{{  $order->price -  $order->shipping_fee }}</div>
                 </div>
                 <div class="shipping d-flex justify-content-between align-items-center">
                     <span>運費:</span>
-                    <div class="value ml-3" id="shipping"></div>
+                    <div class="value ml-3" id="shipping">{{  $order->shipping_fee }}</div>
                 </div>
                 <div class="to-price d-flex justify-content-between align-items-center">
                     <span>總計:</span>
-                    <div class="value ml-3" id="total-price"></div>
+                    <div class="value ml-3" id="total-price">{{  $order->price }}</div>
                 </div>
                 </div>
             </div>

@@ -79,7 +79,7 @@
                 </div>
                 <div class="col-4">
                     <!-- 郵遞區號欄位 (建議加入 readonly 屬性，防止修改) -->
-                    <input class="form-control zipcode" type="text" size="3" readonly placeholder="郵遞區號">
+                    <input class="form-control zipcode" name="zipcode" type="text" size="3" readonly placeholder="郵遞區號">
                 </div>
             </div>
             <div class="form-group row">

@@ -29,7 +29,7 @@ class CreateOrdersTable extends Migration
             $table->boolean('is_paid')->default(0);
             $table->string('shipping');
             $table->integer('shipping_fee');
-            $table->string('shipping_status_id');
+            $table->integer('shipping_status_id');
             $table->longText('remark')->nullable();
             $table->timestamps();
         });
