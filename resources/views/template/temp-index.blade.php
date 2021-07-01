@@ -75,6 +75,11 @@
     </nav>
 
     @yield('index-main')
+    <main>
+        @if (Session::has('message'))
+            
+        @endif
+    </main>
     @yield('shopcart-step')
     <footer>
         <div class="fat-footer">

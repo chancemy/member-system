@@ -109,7 +109,12 @@ class FrontController extends Controller
 
     }
     public function step4(){
-        return view('front.shopcart.shopcart-step4');
+
+        if(Session::has('order')){
+            return view('front.shopcart.shopcart-step4');
+        }else{
+            return redirect('/user/shop_cart/step3')->with('message','先去挑點商品吧');
+        }
 
     }
 
