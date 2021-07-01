@@ -73,13 +73,15 @@
             </nav>
         </div>
     </nav>
-
-    @yield('index-main')
-    <main>
         @if (Session::has('message'))
-            
+            <div class="alert alert-info" role="alert">
+                {{ Session::get('message') }}
+            </div>
         @endif
-    </main>
+    @yield('index-main')
+
+
+
     @yield('shopcart-step')
     <footer>
         <div class="fat-footer">

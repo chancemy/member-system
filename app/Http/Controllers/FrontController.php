@@ -102,9 +102,10 @@ class FrontController extends Controller
             'price'=>$totalPrice,
             'shipping_fee' => $totalPrice > 1000 ? 0 : 60,
         ]);
-        // Session::forget('payment');
-        // Session::forget('shipment');
-        // \Cart::clear();
+        Session::forget('payment');
+        Session::forget('shipment');
+
+        \Cart::clear();
         return redirect('/user/shop_cart/step4')->with('order',$order);
 
     }
@@ -113,7 +114,7 @@ class FrontController extends Controller
         if(Session::has('order')){
             return view('front.shopcart.shopcart-step4');
         }else{
-            return redirect('/user/shop_cart/step3')->with('message','先去挑點商品吧');
+            return redirect('/')->with('message','先去挑點商品吧');
         }
 
     }
