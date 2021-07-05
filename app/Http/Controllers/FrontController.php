@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Order;
 use App\Product;
 use App\ContactUs;
+use App\News;
 use App\OrderDetails;
 use App\ProductsType;
 use Illuminate\Http\Request;
@@ -193,5 +194,10 @@ class FrontController extends Controller
         //    }
         // }
         return view('front.product.index',compact('productDatas','typeDatas'));
+    }
+
+    public function news(){
+        $news =  News::get();
+        return view('front.news.index',compact('news'));
     }
 }

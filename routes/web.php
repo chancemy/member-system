@@ -37,6 +37,8 @@ Route::prefix('user')->group(function(){
 
     });
 
+    Route::get('/news', 'FrontController@news');
+
     Route::prefix('/contact_us')->group(function(){
         Route::get('/create','FrontController@contactUsView' );
         Route::post('/store', 'FrontController@store');
