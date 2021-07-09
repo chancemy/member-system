@@ -17,6 +17,8 @@
 
     <!-- Styles -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+
+    
     @yield('css')
 </head>
 <body>
@@ -103,6 +105,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" ></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    
     @yield('js')
 </body>
 </html>
