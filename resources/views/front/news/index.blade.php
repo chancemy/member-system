@@ -3,7 +3,6 @@
 
 @endsection
 @section('main')
-
     @foreach ($news as $new)
         {{-- @php
         dd($new);
